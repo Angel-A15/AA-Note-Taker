@@ -31,7 +31,7 @@ function createNewNote(body, notesArray) {
     const note = body;
     notesArray.push(note);
     fs.writeFileSync(
-        path.join(_dirname, './data/db.json'),
+        path.join(__dirname, './data/db.json'),
         JSON.stringify({notes: notesArray }, null, 2)
     );
   
@@ -51,13 +51,15 @@ app.post('/api/notes', (req, res) => {
     res.json(note);
 });
 
+//Get Middlewear
+
 app.get('/api/note/:id', (req, res) => {
     const { id } = req.params;
 });
 
 //Route will direct us to notes.html
 app.get('/notes', (req, res) => {
-    res.sendFile(path.join(_dirname, './public/notes.html'));
+    res.sendFile(path.join(__dirname, './public/notes.html'));
 });
 
 //sets file as home page for the server
@@ -68,6 +70,8 @@ app.get('/', (req, res) => {
 app.get('/api/notes', (req, res) => {
     res.json('Notes');
 });
+
+
 //Displays site on specified route
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}`);
