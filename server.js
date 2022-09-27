@@ -1,39 +1,75 @@
-const { notes } = require('./db/db')
+//Added packages and links to files
+
+const fs  = require('fs');
+
+//makes working with fs a bit more predictable
+const path = require('path');
+
+//Route to recieve data from file
+const { notes } = require('./data/db')
 
 const express = require('express');
-const fs  = require('fs');
+
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
-app.get('/api/notes', (req, res) => {
-    res.json('db');
-});
+//all front-end code can now be accessed without 
+//having a specific server endpoint created for it
+app.use(express.static('public'));
 
-function findById(id, notesArray) {
-    const result = notesArray.filter(notes => notes.id === id)[0];
-    return result;
+// parse incoming string or array data
+app.use(express.urlencoded({ extended: true }));
+
+// parse incoming JSON data
+app.use(express.json());
+
+app.use(express.static('public'));
+
+//new note will be push into db(note).json file
+function createNewNote(body, notesArray) {
+    const note = body;
+    notesArray.push(note);
+    fs.writeFileSync(
+        path.join(_dirname, './data/db.json'),
+        JSON.stringify({notes: notesArray }, null, 2)
+    );
+  
+    // return finished code to post route for response
+    return body;
 }
 
+//Will rite notes to json 
+app.post('/api/notes', (req, res) => {
+
+    // set id based on what the next index of the array will be
+    req.body.id = notes.length.toString();
+  
+    // add note to json file and notes array in this function
+    const note = createNewNote(req.body, notes);
+  
+    res.json(note);
+});
+
+app.get('/api/note/:id', (req, res) => {
+    const { id } = req.params;
+});
+
+//Route will direct us to notes.html
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(_dirname, './public/notes.html'));
+});
+
+//sets file as home page for the server
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
 app.get('/api/notes', (req, res) => {
-    let results = notes;
-    if(req.query) {
-        results = filterByQuery(req.query, results);
-    }
-    res.json(results);
+    res.json('Notes');
 });
 
-app.get('/api/notes/:id', (req, res) => {
-    const result = findById(req.params.id, notes);
-    res.json(result);
+//Displays site on specified route
+app.listen(PORT, () => {
+    console.log(`API server now on port ${PORT}`);
 });
-
-api.post('/api/animals', (res, req) => {
-
-});
-
-app.listen(3001, () => {
-    console.log(`API server now on port 3001!`);
-})
-
-
-
