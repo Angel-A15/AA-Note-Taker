@@ -68,7 +68,6 @@ app.get('/', (req, res) => {
 app.get('/api/notes', (req, res) => {
     res.json('Notes');
 });
-
 //Displays site on specified route
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}`);
