@@ -65,3 +65,4 @@ const renderActiveNote = () => {
     noteText.value = '';
   }
 };
+
