@@ -19,7 +19,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-dark ">
       <a class="navbar-brand" href="/">Note Taker </a>
       <div class="icons">
         <i class="fas fa-save text-light save-note"></i>
@@ -33,14 +33,19 @@
             <ul class="list-group"></ul>
           </div>
         </div>
-        <div class="col-8">
+
+        <div class="col-8 txt">
           <input
-            class="note-title"
+          style="height: 150px; width: 70%;"
+            class="note-title row "
             placeholder="Note Title"
             maxlength="28"
             type="text"
           />
-          <textarea class="note-textarea" placeholder="Note Text"></textarea>
+          <textarea 
+          class="note-textarea txt" 
+          style="height: 150px; width: 70%;" 
+          placeholder="Note Text"></textarea>
         </div>
       </div>
     </div>
