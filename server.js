@@ -22,7 +22,7 @@ app.use(express.json());
 
 //all front-end code can now be accessed without 
 //having a specific server endpoint created for it
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //new note will be push into db(note).json file
 function createNewNote(body, notesArray) {
