@@ -5,18 +5,14 @@ const fs  = require('fs');
 //makes working with fs a bit more predictable
 const path = require('path');
 
+const express = require('express');
+
 //Route to recieve data from file
 const { notes } = require('./data/db.json')
-
-const express = require('express');
 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
-
-//all front-end code can now be accessed without 
-//having a specific server endpoint created for it
-app.use(express.static('public'));
 
 // parse incoming string or array data
 app.use(express.urlencoded({ extended: true }));
@@ -24,6 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
 
+//all front-end code can now be accessed without 
+//having a specific server endpoint created for it
 app.use(express.static('public'));
 
 //new note will be push into db(note).json file
@@ -39,7 +37,7 @@ function createNewNote(body, notesArray) {
     return note;
 }
 
-//Will rite notes to json 
+//Will rite notes into json 
 app.post('/api/notes', (req, res) => {
 
     // set id based on what the next index of the array will be
@@ -53,7 +51,7 @@ app.post('/api/notes', (req, res) => {
 
 //Get Middlewear
 
-app.get('/api/note/:id', (req, res) => {
+app.delete('/api/note/:id', (req, res) => {
     const { id } = req.params;
 });
 
@@ -74,5 +72,5 @@ app.get('/api/notes', (req, res) => {
 
 //Displays site on specified route
 app.listen(PORT, () => {
-    console.log(`API server now on port ${PORT}`);
+    console.log(`API server is now on port ${PORT}`);
 });
