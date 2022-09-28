@@ -6,7 +6,7 @@ const fs  = require('fs');
 const path = require('path');
 
 //Route to recieve data from file
-const { notes } = require('./data/db')
+const { notes } = require('./data/db.json')
 
 const express = require('express');
 
@@ -36,7 +36,7 @@ function createNewNote(body, notesArray) {
     );
   
     // return finished code to post route for response
-    return body;
+    return note;
 }
 
 //Will rite notes to json 
@@ -68,7 +68,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/notes', (req, res) => {
-    res.json('Notes');
+    res.json(notes);
 });
 
 
