@@ -8,7 +8,7 @@ const path = require('path');
 const express = require('express');
 
 //Route to recieve data from file
-const { notes } = require('./data/db.json')
+const notes = require('./data/db.json')
 
 const PORT = process.env.PORT || 3001;
 
